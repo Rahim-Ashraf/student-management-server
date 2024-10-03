@@ -50,7 +50,23 @@ async function run() {
             const id = req.query.id;
             const body = req.body;
             const query = { _id: new ObjectId(id) };
-            const cursor = await studentCollection.updateOne(query, body);
+
+            const updateDoc = {
+                $set: {
+                    firstName: body.firstName,
+                    middleName: body.middleName,
+                    lastName: body.lastName,
+                    studentClass: body.studentClass,
+                    division: body.division,
+                    roll: body.roll,
+                    address1: body.address1,
+                    address2: body.address2,
+                    landmark: body.landmark,
+                    city: body.city,
+                    pinCode: body.pinCode,
+                },
+            };
+            const cursor = await studentCollection.updateOne(query, updateDoc);
             res.send(cursor);
         })
         app.delete("/students", async (req, res) => {
